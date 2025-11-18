@@ -22,8 +22,18 @@ function evalString(expr) {
       }
     }
 
-    if (/[+\-*/]{2,}/.test(cleaned)) {
-      throw new InvalidExprError();
+    const invalidPatterns = [
+      /\+\+/,  
+      /\+[*\/]/, 
+      /[*\/]\+/, 
+      /[*]{2}/,  
+      /\/\//,    
+      /\*\/|\/\*/, 
+      /-\*|-\//   
+    ];
+
+    for (let p of invalidPatterns) {
+      if (p.test(cleaned)) throw new InvalidExprError();
     }
 
     if (/^[+/*]/.test(cleaned)) {
@@ -49,6 +59,6 @@ function run() {
     alert("passed");
   } catch (e) {
     alert("failed");
-    throw e; 
+    throw e;    
   }
 }
