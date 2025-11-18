@@ -1,7 +1,6 @@
-//your code here
 class OutOfRangeError extends Error {
   constructor(arg) {
-    super(`Expression should only consist of integers and +-/* characters and not ${arg}`);
+    super(`Expression should only consist of integers and +-/* characters and not '${arg}'`);
     this.name = "OutOfRangeError";
   }
 }
@@ -36,7 +35,20 @@ function evalString(expr) {
     }
 
     return eval(cleaned);
+
   } catch (e) {
-    return e.name + ": " + e.message;
+    throw e;
+  }
+}
+
+function run() {
+  const expr = document.getElementById("input1").value;
+
+  try {
+    evalString(expr);
+    alert("passed");
+  } catch (e) {
+    alert("failed");
+    throw e; 
   }
 }
